@@ -139,7 +139,7 @@ function enviarMensagem(){
 		time: "08:02:50"
 	};
     let enviar = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
-    enviar.then(iniciar);
+    enviar.then(atualizarMsg);
     enviar.catch(Refresh);
 }
 
