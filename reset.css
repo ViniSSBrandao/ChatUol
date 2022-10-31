@@ -46,3 +46,30 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+.xet::-webkit-scrollbar {
+	display: none;
+}
+
+.xet{
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+  }
+
+body{
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+	display: none;
+}
+
+.conversa::-webkit-scrollbar {
+	display: none;
+}
+
+.conversa{
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+  }
