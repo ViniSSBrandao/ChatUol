@@ -1,6 +1,7 @@
 
 //declaração de mensagem
-let msg, info, mensagensAntigas, contador=80;
+let msg, info, mensagensAntigas, contador=80, oldMsg;
+let Utilizador;
 
 const username = prompt('Digite seu nome:');
 registrarNome(username);
@@ -16,11 +17,9 @@ function iniciar(cont){
     teste = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
 
     teste.then(console.log (teste));
-    teste.then(adicionarMensagem);
-    
-
-    iniciar();
-    
+    teste.catch();
+    teste.then(adicionarMensagemInicial);
+    pingStatus();
 }
 
 function temporizador(atualizacao){
@@ -29,39 +28,53 @@ function temporizador(atualizacao){
 }
 
 //Receber mensagens
-function adicionarMensagem (mensagensRecebidas){
+function adicionarMensagemInicial (mensagensRecebidas){
     info = mensagensRecebidas.data;
-    msg = info[contador];
+    
     console.log(contador);
 
     
-        if(contador < 99){
+        while(contador < 99){
         console.log('rodar');
+        msg = info[contador];
         contador++;
-        renderizarMensagem(msg); 
-          
+        renderizarMensagem(msg);     
         }
-
-       else{
-            
-            console.log('temporizar');
-           temporizador(msg);
-            return 0;
-            
-        }
-    
      
+        atualizarMsg();
+}
 
+function atualizarMsg(){
+    
+    let newMsg = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
+    newMsg.then(atualizarChat);
+   
+}
+
+function atualizarChat(novasMsg){
+    console.log('chat atualizado');
+    addChat = novasMsg.data;
+    info.push(addChat[99]);
+    contador++;
+
+    renderizarMensagem(info[contador]);  
+    timer();
+}
+
+function timer(){
+    setTimeout(atualizarMsg, 3000);
 }
 
 //
 function renderizarMensagem(msg){
     console.log('mensagem renderizada');
-    if(msg === mensagensAntigas){
-        return 0;
-    }
-    else{
-    mensagensAntigas = msg;
+  
+
+   
+        
+
+        console.log(mensagensAntigas);
+        console.log(msg);
     switch (msg.type) {
        
         case ('status'):
@@ -74,22 +87,41 @@ function renderizarMensagem(msg){
         break;
 
         case ('private_message'):
-        colocar.innerHTML += `<li class='mensagem private_message'><span class='time'>(${msg.time})</span> <span class='bold'>${msg.from}</span> reservadamente para <span class='bold'>${msg.to}</span>:  ${mensagem[1].text}</li>`;
+        colocar.innerHTML += `<li class='mensagem private_message'><span class='time'>(${msg.time})</span> <span class='bold'>${msg.from}</span> reservadamente para <span class='bold'>${msg.to}</span>:  ${msg.text}</li>`;
 
     break;
 
     default:
         break;
+
+    }
+    scrollDown();
 }
+
+
+function scrollDown() {
+    const elementoQueQueroQueApareca = document.querySelectorAll(".mensagem");
+    if (elementoQueQueroQueApareca != undefined) {
+        elementoQueQueroQueApareca.forEach((i) => {
+            i.scrollIntoView();
+        });
     }
 }
 
+
 function registrarNome(nome){
-const Utilizador = {
+Utilizador = {
     name: nome
 }
-axios.post('https://mock-api.driven.com.br/api/v6/uol/participants' , Utilizador).then(iniciar);
+const entrar = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', Utilizador);
+entrar.then(iniciar);
+entrar.catch(window.location.reload)
 
+}
+
+function pingStatus(){
+    axios.post('https://mock-api.driven.com.br/api/v6/uol/status', Utilizador);
+    setTimeout(pingStatus, 4000);
 }
 
 function enviarMensagem(){
@@ -97,6 +129,7 @@ function enviarMensagem(){
 
     texto = document.getElementById("texto").value;
     console.log (texto)
+    texto.addEventListener
     let mensagem =
     {
 		from: username,
@@ -105,6 +138,11 @@ function enviarMensagem(){
 		type: "message",
 		time: "08:02:50"
 	};
-    axios.post('https://mock-api.driven.com.br/api/v6/uol/messages' , mensagem).then(iniciar);
+    let enviar = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
+    enviar.then(iniciar);
+    enviar.catch(Refresh);
 }
 
+function Refresh(){
+    window.location.reload()
+}
