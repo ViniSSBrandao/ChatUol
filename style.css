@@ -80,7 +80,7 @@ height: 80px;
     padding-top: 13px;
     padding-bottom: 13px;
     margin-bottom: 4px;
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 
 .general_message{
@@ -92,7 +92,7 @@ height: 80px;
     padding-top: 13px;
     padding-bottom: 13px;
     margin-bottom: 4px;
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 
 .private_message{
@@ -105,7 +105,7 @@ height: 80px;
     padding-bottom: 13px;
     margin-bottom: 4px;
    
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 
 .bold{
@@ -114,7 +114,7 @@ height: 80px;
 
 .time{
     color:#AAAAAA;
-    
+
 }
 /*
 CLASSES

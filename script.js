@@ -16,14 +16,59 @@ const mensagem = [
 		time: "08:02:50"
 	},
 ];
+let msg, info, mensagensAntigas, contador=0;
+
+const colocar = document.querySelector('.conversa');
 
 
+let teste ;
+
+temporizador();
+
+function temporizador(){
+    teste = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
+    teste.then(adicionarMensagem);
+    teste.then(console.log (teste));
+}
 
 //Adicionar mensagens
-let colocar = document.querySelector('.conversa');
-//template para mensagem geral
-colocar.innerHTML += `<li class='general_message'><span class='time'>(${mensagem[1].time})</span> <span class='bold'>${mensagem[1].from}</span> para <span class='bold'>${mensagem[1].to}</span>:  ${mensagem[1].text}</li>`;
-//template para mensagem privada
-colocar.innerHTML += `<li class='general_message'><span class='time'>(${mensagem[1].time})</span> <span class='bold'>${mensagem[1].from}</span> reservadamente para <span class='bold'>${mensagem[1].to}</span>:  ${mensagem[1].text}</li>`;
-//template para log
-colocar.innerHTML += `<li class='general_message'><span class='time'>(${mensagem[0].time})</span> <span class='bold'>${mensagem[0].from}</span>:  ${mensagem[0].text}</li>`;
+function adicionarMensagem (mensagensRecebidas){
+    info = mensagensRecebidas.data;
+
+    
+    msg = info[contador];
+    console.log(msg);
+    if(contador <= 99){
+    contador++;
+    }
+    else{
+        return 0;
+    }
+    renderizarMensagem(msg)
+    mensagensAntigas = info;
+
+}
+
+function renderizarMensagem(msg){
+    switch (msg.type) {
+       
+        case ('status'):
+            colocar.innerHTML += `<li class='user_log'><span class='time'>(${msg.time})</span> <span class='bold'>${msg.from}</span>:  ${msg.text}</li>`;
+            break;
+            
+        case ('message'):
+        colocar.innerHTML += `<li class='general_message'><span class='time'>(${msg.time})</span> <span class='bold'>${msg.from}</span> para <span class='bold'>${msg.to}</span>:  ${msg.text}</li>`;
+                
+        break;
+
+        case ('private_message'):
+        colocar.innerHTML += `<li class='private_message'><span class='time'>(${msg.time})</span> <span class='bold'>${msg.from}</span> reservadamente para <span class='bold'>${msg.to}</span>:  ${mensagem[1].text}</li>`;
+
+    break;
+
+    default:
+        break;
+}
+temporizador();
+}
+
