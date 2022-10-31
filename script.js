@@ -1,6 +1,6 @@
 
 //declaração de mensagem
-let msg, info, mensagensAntigas, contador=80, oldMsg;
+let msg, info, contador=80, oldMsg;
 let Utilizador;
 
 const username = prompt('Digite seu nome:');
@@ -54,10 +54,20 @@ function atualizarMsg(){
 function atualizarChat(novasMsg){
     console.log('chat atualizado');
     addChat = novasMsg.data;
+    console.log(oldMsg, addChat[99].time)
+    let time = addChat[99].time;
+    if(time === oldMsg){
+        console.log('repetido')
+        timer();
+    }
+    else{
     info.push(addChat[99]);
     contador++;
-
-    renderizarMensagem(info[contador]);  
+    renderizarMensagem(info[contador]);
+    }
+      
+    oldMsg = time;
+    
     timer();
 }
 
@@ -73,7 +83,7 @@ function renderizarMensagem(msg){
    
         
 
-        console.log(mensagensAntigas);
+        
         console.log(msg);
     switch (msg.type) {
        
