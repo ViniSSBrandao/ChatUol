@@ -141,7 +141,16 @@ function enviarMensagem(){
     let enviar = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
     enviar.then(atualizarMsg);
     enviar.catch(Refresh);
+
 }
+
+texto.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("myBtn").click();
+    }
+  });
+
 
 function Refresh(){
     window.location.reload()

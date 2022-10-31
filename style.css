@@ -127,19 +127,21 @@ height: 80px;
     padding-left: 5px ;
     font-size: 18px;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .logo{
     width: 75px; 
-    position: relative;
+    position: absolute;
     left: 22px;
-    top: 10px;
+    top: 8px;
 }
 
 .people{
    position: absolute;
-   top: 15px;
+   top: 12.5px;
    right: 20px;
+   
 }
 
 .send{
